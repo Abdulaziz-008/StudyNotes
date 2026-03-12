@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StudyNotes — Talabalar uchun konspekt platformasi</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body>
+
+  <!-- ===== NAVBAR ===== -->
+  <nav>
+    <a class="nav-logo" href="#" onclick="showPage('home')">
+      📚 Study<span>Notes</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#" onclick="showPage('home')" class="active" id="nav-home">Bosh sahifa</a></li>
+      <li><a href="#" onclick="showPage('notes')" id="nav-notes">Konspektlar</a></li>
+      <li><a href="#" onclick="showPage('subjects')" id="nav-subjects">Fanlar</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="btn btn-ghost" onclick="openModal('login')">Kirish</button>
+      <button class="btn btn-primary" onclick="openModal('register')">Ro'yxatdan o'tish</button>
+      <button class="hamburger" onclick="toggleMenu()" id="hamburger">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#" onclick="showPage('home');closeMenu()">🏠 Bosh sahifa</a>
+    <a href="#" onclick="showPage('notes');closeMenu()">📚 Konspektlar</a>
+    <a href="#" onclick="showPage('subjects');closeMenu()">🗂 Fanlar</a>
+    <a href="#" onclick="openModal('login');closeMenu()">🔐 Kirish</a>
+    <a href="#" onclick="openModal('register');closeMenu()">✨ Ro'yxatdan o'tish</a>
+  </div>
+
+  <!-- ===== PAGE: HOME ===== -->
+  <div class="page active" id="page-home">
+    <section class="hero">
+      <div class="hero-glow"></div>
+      <div class="hero-tag">🎓 Talabalar uchun, talabalar tomonidan</div>
+      <h1>O'rganish <em>osonroq</em><br />bo'lishi mumkin</h1>
+      <p>Eng yaxshi konspektlarni toping, yuklang va do'stlaringiz bilan ulashing. Matematikadan tarixgacha — barchasi bir joyda.</p>
+      <div class="hero-btns">
+        <button class="btn btn-primary btn-lg" onclick="showPage('notes')">📚 Konspektlarni ko'rish</button>
+        <button class="btn btn-ghost btn-lg" onclick="openModal('upload')">⬆️ Konspekt yuklash</button>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><strong>2,400+</strong><span>Konspektlar</span></div>
+        <div class="stat"><strong>1,800+</strong><span>Talabalar</span></div>
+        <div class="stat"><strong>12</strong><span>Fanlar</span></div>
+        <div class="stat"><strong>98%</strong><span>Mamnunlik</span></div>
+      </div>
+    </section>
+
+    <div class="subjects-strip">
+      <p class="section-label">Mashhur fanlar</p>
+      <div class="subjects-grid">
+        <a class="subject-chip" onclick="filterBySubject('Matematika')"><div class="icon">➕</div><div class="name">Matematika</div><div class="count">342 ta</div></a>
+        <a class="subject-chip" onclick="filterBySubject('Fizika')"><div class="icon">⚛️</div><div class="name">Fizika</div><div class="count">218 ta</div></a>
+        <a class="subject-chip" onclick="filterBySubject('Tarix')"><div class="icon">📜</div><div class="name">Tarix</div><div class="count">195 ta</div></a>
+        <a class="subject-chip" onclick="filterBySubject('Dasturlash')"><div class="icon">💻</div><div class="name">Dasturlash</div><div class="count">287 ta</div></a>
+        <a class="subject-chip" onclick="filterBySubject('Kimyo')"><div class="icon">🧪</div><div class="name">Kimyo</div><div class="count">143 ta</div></a>
+        <a class="subject-chip" onclick="filterBySubject('Biologiya')"><div class="icon">🌿</div><div class="name">Biologiya</div><div class="count">167 ta</div></a>
+        <a class="subject-chip" onclick="filterBySubject('Ingliz tili')"><div class="icon">🇬🇧</div><div class="name">Ingliz tili</div><div class="count">231 ta</div></a>
+        <a class="subject-chip" onclick="filterBySubject('Iqtisodiyot')"><div class="icon">📈</div><div class="name">Iqtisodiyot</div><div class="count">112 ta</div></a>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header">
+        <div class="section-title">🔥 Mashhur konspektlar</div>
+        <button class="btn btn-ghost" onclick="showPage('notes')">Barchasini ko'rish →</button>
+      </div>
+      <div class="notes-grid" id="homeNotesGrid"></div>
+    </div>
+  </div>
+
+  <!-- ===== PAGE: NOTES ===== -->
+  <div class="page" id="page-notes">
+    <div class="section" style="padding-top: 40px;">
+      <h1 class="page-title">Barcha konspektlar</h1>
+      <p class="page-subtitle">2,400+ dan ortiq material — bepul yuklang</p>
+
+      <div class="search-wrap">
+        <span class="search-icon">🔍</span>
+        <input
+          type="text"
+          class="search-input"
+          placeholder="Konspekt nomi yoki fan bo'yicha qidiring..."
+          id="searchInput"
+          oninput="filterNotes()"
+        />
+      </div>
+
+      <div class="filter-row">
+        <button class="filter-btn active" onclick="setFilter('Barchasi', this)">Barchasi</button>
+        <button class="filter-btn" onclick="setFilter('Matematika', this)">➕ Matematika</button>
+        <button class="filter-btn" onclick="setFilter('Fizika', this)">⚛️ Fizika</button>
+        <button class="filter-btn" onclick="setFilter('Tarix', this)">📜 Tarix</button>
+        <button class="filter-btn" onclick="setFilter('Dasturlash', this)">💻 Dasturlash</button>
+        <button class="filter-btn" onclick="setFilter('Kimyo', this)">🧪 Kimyo</button>
+      </div>
+
+      <div class="notes-grid" id="allNotesGrid"></div>
+    </div>
+  </div>
+
+  <!-- ===== PAGE: NOTE DETAIL ===== -->
+  <div class="page" id="page-detail">
+    <div class="note-detail-header" id="detailHeader"></div>
+    <div class="note-detail-body">
+      <div id="detailMain"></div>
+      <div id="detailSide"></div>
+    </div>
+  </div>
+
+  <!-- ===== PAGE: SUBJECTS ===== -->
+  <div class="page" id="page-subjects">
+    <div class="section" style="padding-top: 40px;">
+      <h1 class="page-title">Fanlar bo'yicha</h1>
+      <p class="page-subtitle">O'zingizga kerakli fanni tanlang</p>
+      <div class="subjects-grid" id="allSubjectsGrid"></div>
+    </div>
+  </div>
+
+  <!-- ===== PAGE: PROFILE ===== -->
+  <div class="page" id="page-profile">
+    <div class="profile-header">
+      <div class="profile-avatar-big" id="profileAvatarBig" style="background: var(--accent);">A</div>
+      <div>
+        <div class="profile-name" id="profileName">Abdulloh Toshmatov</div>
+        <div class="profile-email" id="profileEmail">abdulloh@example.com</div>
+      </div>
+      <button class="btn btn-ghost" style="margin-left: auto;" onclick="openModal('upload')">⬆️ Konspekt yuklash</button>
+    </div>
+    <div class="profile-stats-row">
+      <div class="mini-stat"><strong>12</strong><span>Yuklangan</span></div>
+      <div class="mini-stat"><strong>847</strong><span>Yuklab olindi</span></div>
+      <div class="mini-stat"><strong>4.8⭐</strong><span>O'rtacha reyting</span></div>
+      <div class="mini-stat"><strong>34</strong><span>Izohlar</span></div>
+    </div>
+    <div class="section" style="padding-top: 0;">
+      <div class="section-header">
+        <div class="section-title">📁 Mening konspektlarim</div>
+      </div>
+      <div class="notes-grid" id="profileNotesGrid"></div>
+    </div>
+  </div>
+
+  <!-- ===== MODAL: LOGIN ===== -->
+  <div class="modal-overlay" id="modal-login">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal('login')">✕</button>
+      <h2>Xush kelibsiz 👋</h2>
+      <p class="sub">Hisobingizga kiring</p>
+      <div class="social-btns" style="margin-bottom: 20px;">
+        <button class="social-btn" onclick="socialLogin('Google')">🔴 Google</button>
+        <button class="social-btn" onclick="socialLogin('GitHub')">⚫ GitHub</button>
+      </div>
+      <div class="form-divider">yoki email bilan</div>
+      <br />
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input type="email" class="form-input" placeholder="email@example.com" id="loginEmail" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Parol</label>
+        <input type="password" class="form-input" placeholder="••••••••" id="loginPass" />
+      </div>
+      <button class="btn btn-primary btn-full" onclick="doLogin()">Kirish →</button>
+      <p class="form-footer">
+        Hisob yo'qmi? <a class="form-link" onclick="switchModal('login','register')">Ro'yxatdan o'ting</a>
+      </p>
+    </div>
+  </div>
+
+  <!-- ===== MODAL: REGISTER ===== -->
+  <div class="modal-overlay" id="modal-register">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal('register')">✕</button>
+      <h2>Hisob yaratish ✨</h2>
+      <p class="sub">Minglab konspektlarga kirish imkoniga ega bo'ling</p>
+      <div class="form-group">
+        <label class="form-label">Username</label>
+        <input type="text" class="form-input" placeholder="username123" id="regUsername" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input type="email" class="form-input" placeholder="email@example.com" id="regEmail" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Parol</label>
+        <input type="password" class="form-input" placeholder="Kamida 8 ta belgi" id="regPass" />
+      </div>
+      <button class="btn btn-primary btn-full" onclick="doRegister()">Ro'yxatdan o'tish →</button>
+      <p class="form-footer">
+        Allaqachon hisobingiz bormi? <a class="form-link" onclick="switchModal('register','login')">Kiring</a>
+      </p>
+    </div>
+  </div>
+
+  <!-- ===== MODAL: UPLOAD ===== -->
+  <div class="modal-overlay" id="modal-upload">
+    <div class="modal modal-wide">
+      <button class="modal-close" onclick="closeModal('upload')">✕</button>
+      <h2>Konspekt yuklash 📤</h2>
+      <p class="sub">O'z materialingizni boshqalar bilan ulashing</p>
+      <div class="form-group">
+        <label class="form-label">Sarlavha</label>
+        <input type="text" class="form-input" placeholder="Masalan: Integral calculus konspekti" id="uploadTitle" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Fan</label>
+        <select class="form-select" id="uploadSubject">
+          <option value="">Fan tanlang...</option>
+          <option>Matematika</option>
+          <option>Fizika</option>
+          <option>Tarix</option>
+          <option>Dasturlash</option>
+          <option>Kimyo</option>
+          <option>Biologiya</option>
+          <option>Ingliz tili</option>
+          <option>Iqtisodiyot</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Tavsif</label>
+        <textarea class="form-textarea" placeholder="Konspekt haqida qisqacha..." id="uploadDesc"></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Fayl (PDF yoki DOC)</label>
+        <div class="upload-zone" onclick="fakeUpload()">
+          <div class="icon" id="uploadIcon">📄</div>
+          <p id="uploadText">Faylni shu yerga tashlang yoki <span>tanlash uchun bosing</span></p>
+        </div>
+      </div>
+      <button class="btn btn-primary btn-full" onclick="doUpload()">Yuklash →</button>
+    </div>
+  </div>
+
+  <!-- ===== TOAST ===== -->
+  <div class="toast" id="toast">
+    <span id="toastIcon">✅</span>
+    <span id="toastMsg">Muvaffaqiyatli!</span>
+  </div>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <p>© 2025 StudyNotes — Talabalar uchun yaratilgan 💛 | <a href="#">Telegram</a></p>
+  </footer>
+
+  <!-- ===== SCRIPTS ===== -->
+  <script src="js/data.js"></script>
+  <script src="js/render.js"></script>
+  <script src="js/pages.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/modal.js"></script>
+  <script src="js/app.js"></script>
+
+</body>
+</html>

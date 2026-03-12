@@ -1,0 +1,79 @@
+/* =============================================
+   responsive.css — Media queries
+   ============================================= */
+
+/* ===== TABLET (768px) ===== */
+@media (max-width: 768px) {
+  .nav-links               { display: none; }
+  .nav-right .btn-ghost    { display: none; }
+  .hamburger               { display: flex; }
+
+  .note-detail-body {
+    grid-template-columns: 1fr;
+  }
+  #detailSide { order: -1; }
+
+  .hero-stats { gap: 24px; }
+
+  .profile-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .profile-header .btn-ghost {
+    margin-left: 0 !important;
+  }
+}
+
+/* ===== MOBILE (480px) ===== */
+@media (max-width: 480px) {
+  .modal {
+    padding: 24px 20px;
+  }
+
+  .hero-btns {
+    flex-direction: column;
+    align-items: center;
+  }
+  .btn-lg {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .profile-stats-row {
+    flex-direction: column;
+  }
+
+  .notes-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .subjects-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .filter-row {
+    gap: 6px;
+  }
+
+  .hero h1 {
+    font-size: 2.2rem;
+  }
+
+  .note-detail-header {
+    padding: 30px 16px 0;
+  }
+
+  .note-detail-body {
+    padding: 24px 16px 60px;
+  }
+}
+
+/* ===== SMALL MOBILE (360px) ===== */
+@media (max-width: 360px) {
+  .subjects-grid {
+    grid-template-columns: 1fr;
+  }
+  .social-btns {
+    flex-direction: column;
+  }
+}
