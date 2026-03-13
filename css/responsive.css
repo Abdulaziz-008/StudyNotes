@@ -1,7 +1,22 @@
 /* =============================================
    responsive.css — Media queries
    ============================================= */
+.nav-logo {
+  /* white-space: nowrap; */
+  flex-shrink: 0;
+}
 
+nav {
+  flex-wrap: nowrap;
+}
+
+@media (max-width: 768px) {
+  .nav-right .btn-primary {
+    padding: 6px 14px;
+    font-size: 0.8rem;
+    border-radius: 8px;
+  }
+}
 /* ===== TABLET (768px) ===== */
 @media (max-width: 768px) {
   .nav-links               { display: none; }

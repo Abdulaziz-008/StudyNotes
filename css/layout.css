@@ -27,8 +27,9 @@ nav {
   align-items: center;
   gap: 8px;
 }
-.nav-logo span { color: var(--accent); }
 
+
+.nav-logo .logo-notes { color: var(--accent); }
 .nav-links {
   display: flex;
   align-items: center;
